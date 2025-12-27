@@ -1,4 +1,4 @@
-# 🛍️ Lido Mall Chatbot - React Frontend
+# 🛍️ Lulu Mall Chatbot - React Frontend
 
 A modern, responsive React frontend for the Lido Mall Shopping Assistant chatbot.
 
