@@ -1,7 +1,9 @@
 import axios from "axios";
 
 // API Configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  "https://aiagent-e2dsehe7gseabqga.centralindia-01.azurewebsites.net/";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
