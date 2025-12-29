@@ -3,6 +3,7 @@ import ChatHeader from "./components/ChatHeader";
 import ChatMessages from "./components/ChatMessages";
 import ChatInput from "./components/ChatInput";
 import WelcomeScreen from "./components/WelcomeScreen";
+import ScrollToBottomButton from "./components/ScrollToBottomButton";
 import { sendMessageStreamingAPI } from "./utils/api";
 import "./styles/App.css";
 
@@ -17,20 +18,63 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showScrollButton, setShowScrollButton] = useState(false);
   const messagesEndRef = useRef(null);
+  const chatContentRef = useRef(null);
 
   // Log session ID for debugging
   useEffect(() => {
     console.log("🔑 Session ID:", sessionId);
   }, [sessionId]);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollToBottom = (behavior = "smooth") => {
+    messagesEndRef.current?.scrollIntoView({ behavior });
   };
 
+  // Auto-scroll when messages or loading state changes
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoading]);
+
+  // Visual Viewport API listener for keyboard open/close
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.visualViewport) return;
+
+    const handleViewportResize = () => {
+      // Instantly scroll to bottom when keyboard opens (viewport height changes)
+      scrollToBottom("instant");
+    };
+
+    window.visualViewport.addEventListener("resize", handleViewportResize);
+
+    return () => {
+      window.visualViewport.removeEventListener("resize", handleViewportResize);
+    };
+  }, []);
+
+  // Scroll detection to show/hide scroll-to-bottom button
+  useEffect(() => {
+    const chatContent = chatContentRef.current;
+    if (!chatContent) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = chatContent;
+      const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
+      setShowScrollButton(!isNearBottom && messages.length > 0);
+    };
+
+    chatContent.addEventListener("scroll", handleScroll);
+    // Initial check
+    handleScroll();
+
+    return () => {
+      chatContent.removeEventListener("scroll", handleScroll);
+    };
+  }, [messages]);
+
+  const handleScrollToBottom = () => {
+    scrollToBottom("smooth");
+  };
 
   const handleSendMessage = async (text) => {
     if (!text.trim()) return;
@@ -116,7 +160,7 @@ function App() {
       <div className="chat-container">
         <ChatHeader />
 
-        <div className="chat-content">
+        <div className="chat-content" ref={chatContentRef}>
           {messages.length === 0 ? (
             <WelcomeScreen onSuggestionClick={handleSuggestionClick} />
           ) : (
@@ -129,6 +173,11 @@ function App() {
         </div>
 
         <ChatInput onSendMessage={handleSendMessage} isLoading={isLoading} />
+
+        <ScrollToBottomButton
+          isVisible={showScrollButton}
+          onClick={handleScrollToBottom}
+        />
       </div>
     </div>
   );

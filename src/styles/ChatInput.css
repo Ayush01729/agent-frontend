@@ -1,9 +1,13 @@
 .chat-input-container {
   padding: 16px 20px;
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
   background: white;
   border-top: 1px solid var(--border);
   display: flex;
   align-items: flex-end;
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
 }
 
 .input-wrapper {
