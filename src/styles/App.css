@@ -23,7 +23,6 @@
   flex-direction: column;
   overflow: hidden;
   animation: slideIn 0.5s ease-out;
-  transition: height 0.3s ease;
 }
 
 @keyframes slideIn {
@@ -41,8 +40,8 @@
   flex: 1;
   overflow-y: auto;
   background: var(--background);
-  transition: height 0.3s ease, max-height 0.3s ease;
   position: relative;
+  min-height: 0;
 }
 
 /* Mobile Responsive */
