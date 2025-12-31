@@ -59,7 +59,7 @@ api.interceptors.response.use(
  */
 export const sendMessageStreamingAPI = async (query, sessionId, onToken) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/chat/stream`, {
+    const response = await fetch(`${API_BASE_URL}/chat/stream/v1`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
