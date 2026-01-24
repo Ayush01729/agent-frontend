@@ -15,7 +15,7 @@ const WelcomeScreen = ({ onSuggestionClick }) => {
     <div className="welcome-screen">
       <div className="welcome-content">
         <div className="welcome-icon">👋</div>
-        <h2>Welcome to Lulu Mall!</h2>
+        <h2>Welcome to DLF Mall!</h2>
         <p>
           I'm your personal shopping assistant. Ask me about stores, products,
           offers, or anything else about the mall.
