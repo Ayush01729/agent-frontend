@@ -5,6 +5,7 @@ const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
   "https://aiagent-e2dsehe7gseabqga.centralindia-01.azurewebsites.net/";
 
+// const API_BASE_URL = "http://localhost:8000";
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -20,7 +21,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // Response interceptor
@@ -47,7 +48,7 @@ api.interceptors.response.use(
     } else {
       throw new Error(message || "Something went wrong");
     }
-  }
+  },
 );
 
 /**
@@ -59,7 +60,7 @@ api.interceptors.response.use(
  */
 export const sendMessageStreamingAPI = async (query, sessionId, onToken) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/chat/stream/v1`, {
+    const response = await fetch(`${API_BASE_URL}/chat/dlf/v1`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
