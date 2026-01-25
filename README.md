@@ -17,7 +17,7 @@ A modern, responsive React frontend for the Lido Mall Shopping Assistant chatbot
 
 ### Prerequisites
 
-- Node.js 16+ and npm (or yarn)
+- Node.js 16+ and npm (or yarn) ## minor changes
 - Backend API running on `http://localhost:8000`
 
 ### Installation
